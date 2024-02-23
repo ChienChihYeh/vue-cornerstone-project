@@ -1,6 +1,6 @@
 # Vue-Cornerstone3D
 
-This is a showcase of Cornerstone3D integration in a Vue application, featuring:
+This is a showcase of Cornerstone3D integration in Vue application, featuring:
 
 - A new DICOM image loader
 - Custom web image loader
