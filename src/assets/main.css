@@ -1,0 +1,27 @@
+@import './base.css';
+
+.viewer {
+  width: 512px;
+  height: 512px;
+  margin: auto;
+}
+
+.viewer canvas {
+  transform: translateX(-50%);
+}
+
+.viewer-container {
+  text-align: center;
+}
+
+.viewers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.toolbar {
+  margin-bottom: 8px;
+}
