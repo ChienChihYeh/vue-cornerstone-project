@@ -9,6 +9,7 @@ This repository of a working project provides the basic code demo showcasing the
 - Displaying stack images with Cornerstone3D
 - Basic usage of Cornerstone3D tools
 - Abstraction of tools, event handlers, and configurations to hooks
+- Using Cornerstone3D with Typescript and providing necessary type declarations
 
 ### Resources
 
