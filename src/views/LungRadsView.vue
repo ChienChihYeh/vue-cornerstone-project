@@ -21,7 +21,6 @@ const route = useRoute()
 const { token } = useTokenStore()
 const { logoutUser } = useAuth()
 useImageLoaderConfigure()
-console.log(route.params)
 
 function imageApiPath(axis: 'axial' | 'coronal') {
   if (axis === 'coronal') {

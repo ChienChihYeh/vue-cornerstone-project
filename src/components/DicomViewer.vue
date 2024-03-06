@@ -11,16 +11,17 @@ const props = defineProps<{
   imageIds: string[]
 }>()
 
-const { RenderingEngine, Enums } = cornerstone
-const { ViewportType } = Enums
-const { initToolGroup, destroyToolGroup } = useToolGroup()
+const renderingEngineId = import.meta.env.VITE_CORNERSTONE_RENDERINGENGINE
+const viewportId = import.meta.env.VITE_CORNERSTONE_AXIAL_VIEWPORT
+const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
 
 const el = ref()
 const slice = ref(0)
 const viewport = ref<Types.IStackViewport>()
-const renderingEngineId = 'axialRenderingEngine'
-const viewportId = 'CT_AXIAL_STACK'
-const toolGroupId = 'aixalToolGroup'
+
+const { Enums } = cornerstone
+const { ViewportType } = Enums
+const { addViewport } = useToolGroup()
 
 watchEffect(() => {
   if (props.imageIds.length > 0 && viewport.value) {
@@ -31,18 +32,16 @@ watchEffect(() => {
 
 function enableViewer() {
   //https://www.cornerstonejs.org/docs/tutorials/basic-stack
-  const renderingEngine = new RenderingEngine(renderingEngineId)
-
+  const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId)
   // https://www.cornerstonejs.org/docs/concepts/cornerstone-core/viewports/
   // https://www.cornerstonejs.org/live-examples/stackposition
-  renderingEngine.enableElement({
+  renderingEngine?.enableElement({
     viewportId,
     element: el.value,
     type: ViewportType.STACK,
     defaultOptions: { displayArea: { imageArea: [1, 1] } }
   })
-  viewport.value = renderingEngine.getViewport(viewportId) as IStackViewport
-  initToolGroup(toolGroupId, viewportId, renderingEngineId)
+  viewport.value = renderingEngine?.getViewport(viewportId) as IStackViewport
 }
 
 useEventListener(window, 'mouseup', () => {
@@ -55,9 +54,11 @@ function setSlice(index: number) {
 
 onMounted(() => {
   enableViewer()
+  addViewport(viewportId, toolGroupId)
 })
 onUnmounted(() => {
-  destroyToolGroup(toolGroupId)
+  const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId)
+  renderingEngine?.disableElement(viewportId)
 })
 </script>
 <template>

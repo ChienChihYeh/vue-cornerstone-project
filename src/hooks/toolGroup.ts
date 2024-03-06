@@ -6,9 +6,14 @@ export function useToolGroup() {
   function destroyToolGroup(toolGroupId: string) {
     ToolGroupManager.destroyToolGroup(toolGroupId)
   }
+  function addViewport(viewportId: string, toolGroupId: string) {
+    const toolGroup = ToolGroupManager.getToolGroup(toolGroupId)
+    toolGroup?.addViewport(viewportId)
+  }
 
   return {
     initToolGroup,
-    destroyToolGroup
+    destroyToolGroup,
+    addViewport
   }
 }

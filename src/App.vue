@@ -3,8 +3,12 @@ import { RouterView } from 'vue-router'
 import { useTokenStore } from './stores/token'
 import router from './router'
 import { useCornerstoneInit } from './hooks/cornerstoneInit'
+import { onUnmounted } from 'vue'
+import { useToolGroup } from './hooks/toolGroup'
 
+const { destroyToolGroup } = useToolGroup()
 const { setToken } = useTokenStore()
+const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
 
 const localToken = localStorage.getItem('token')
 if (localToken) {
@@ -14,6 +18,10 @@ if (!localToken) {
   router.push('/login')
 }
 useCornerstoneInit()
+
+onUnmounted(() => {
+  destroyToolGroup(toolGroupId)
+})
 </script>
 <template>
   <main>

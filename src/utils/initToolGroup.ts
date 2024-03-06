@@ -6,14 +6,13 @@ import {
   Enums as csToolsEnums
 } from '@cornerstonejs/tools'
 
-export function initToolGroup(toolGroupId: string, viewportId: string, renderingEngineId: string) {
+export function initToolGroup(toolGroupId: string) {
   const toolGroup = ToolGroupManager.createToolGroup(toolGroupId)
 
   if (toolGroup) {
     // toolGroup.addTool(StackScrollMouseWheelTool.toolName)
     toolGroup.addTool(ZoomTool.toolName)
     toolGroup.addTool(WindowLevelTool.toolName)
-    toolGroup.addViewport(viewportId, renderingEngineId)
 
     // toolGroup?.setToolActive(StackScrollMouseWheelTool.toolName)
     toolGroup.setToolActive(WindowLevelTool.toolName, {

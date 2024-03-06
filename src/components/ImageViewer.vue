@@ -12,43 +12,39 @@ const props = defineProps<{
   imageIds: string[]
 }>()
 
+const renderingEngineId = import.meta.env.VITE_CORNERSTONE_RENDERINGENGINE
+const viewportId = import.meta.env.VITE_CORNERSTONE_CORONAL_VIEWPORT
+const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
+
 const el = ref()
 const slice = ref(0)
 const viewport = ref<Types.IStackViewport>()
-const renderingEngineId = 'coronalRenderingEngine'
-const viewportId = 'CT_CORONAL_STACK'
-const toolGroupId = 'coronalToolGroup'
-const { RenderingEngine, Enums, imageLoader, metaData } = cornerstone
+
+const { Enums, imageLoader, metaData } = cornerstone
 const { ViewportType } = Enums
-const { initToolGroup, destroyToolGroup } = useToolGroup()
+const { addViewport } = useToolGroup()
 const { registerWebImageLoader } = useWebImageLoader()
 
 registerWebImageLoader(imageLoader)
 
 async function enableViewer() {
-  const renderingEngine = new RenderingEngine(renderingEngineId)
-
+  //https://www.cornerstonejs.org/docs/tutorials/basic-stack
+  const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId)
   // https://www.cornerstonejs.org/docs/concepts/cornerstone-core/viewports/
   // https://www.cornerstonejs.org/live-examples/stackposition
-  renderingEngine.enableElement({
+  renderingEngine?.enableElement({
     viewportId,
     element: el.value,
     type: ViewportType.STACK,
     defaultOptions: { displayArea: { imageArea: [1, 1] } }
   })
-  viewport.value = renderingEngine.getViewport(viewportId) as Types.IStackViewport
+  viewport.value = renderingEngine?.getViewport(viewportId) as Types.IStackViewport
   const imageIds = props.imageIds
-  metaData.addProvider(
-    // @ts-ignore
-    (type, imageId) => {
-      // this metadata provider is just a demo, replace with your own
-      const result = hardcodedMetaDataProvider(type, imageId, imageIds)
-      return result
-    },
-    1000
-  )
-  //https://www.cornerstonejs.org/docs/tutorials/basic-stack
-  initToolGroup(toolGroupId, viewportId, renderingEngineId)
+  metaData.addProvider((type, imageId) => {
+    // this metadata provider is just a demo, replace with your own
+    const result = hardcodedMetaDataProvider(type, imageId, imageIds)
+    return result
+  }, 1000)
 }
 
 async function initRender() {
@@ -75,9 +71,11 @@ function setSlice(index: number) {
 
 onMounted(() => {
   enableViewer()
+  addViewport(viewportId, toolGroupId)
 })
 onUnmounted(() => {
-  destroyToolGroup(toolGroupId)
+  const renderingEngine = cornerstone.getRenderingEngine(renderingEngineId)
+  renderingEngine?.disableElement(viewportId)
 })
 </script>
 <template>
