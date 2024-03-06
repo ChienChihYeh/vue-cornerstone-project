@@ -7,8 +7,6 @@ import { useToolGroup } from './toolGroup'
 
 const renderingEngineId = import.meta.env.VITE_CORNERSTONE_RENDERINGENGINE
 const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
-const axialViewportId = import.meta.env.VITE_CORNERSTONE_AXIAL_VIEWPORT
-const coronalViewportId = import.meta.env.VITE_CORNERSTONE_CORONAL_VIEWPORT
 
 export function useCornerstoneInit() {
   const { RenderingEngine } = cornerstone
@@ -19,13 +17,13 @@ export function useCornerstoneInit() {
     cornerstoneTools.init()
     cornerstoneDICOMImageLoader.external.cornerstone = cornerstone
     cornerstoneDICOMImageLoader.external.dicomParser = dicomParser
-    const renderingEngine = new RenderingEngine(renderingEngineId)
+    new RenderingEngine(renderingEngineId)
 
     const { StackScrollMouseWheelTool, WindowLevelTool, ZoomTool } = cornerstoneTools
     cornerstoneTools.addTool(WindowLevelTool)
     cornerstoneTools.addTool(ZoomTool)
     cornerstoneTools.addTool(StackScrollMouseWheelTool)
-    initToolGroup(toolGroupId, [axialViewportId, coronalViewportId], renderingEngineId)
+    initToolGroup(toolGroupId)
   }
 
   onMounted(() => {

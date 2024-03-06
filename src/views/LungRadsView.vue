@@ -12,6 +12,7 @@ import { useAuth } from '@/hooks/auth'
 import { useImageLoaderConfigure } from '@/hooks/imageLoaderConfigure'
 
 const url = import.meta.env.VITE_FETCH_BASE_URL
+
 const axialImageIds = ref([])
 const coronalImageIds = ref([])
 function returnToStudyList() {
@@ -59,15 +60,6 @@ function getImageIds(axis: 'axial' | 'coronal', params: LungRadsFetchParams) {
 }
 getImageIds('axial', route.params as LungRadsFetchParams)
 getImageIds('coronal', route.params as LungRadsFetchParams)
-
-function handleLogout() {
-  axios
-    .post(url + 'api/logs', { token: token }, { headers: { Authorization: `Bearer ${token}` } })
-    .then((res) => {
-      console.log(res.data)
-    })
-  logoutUser()
-}
 </script>
 <template>
   <div>
@@ -77,7 +69,7 @@ function handleLogout() {
       <ImageViewer :image-ids="coronalImageIds" />
     </div>
     <button @click="returnToStudyList()">Return</button>
-    <button @click="handleLogout()">Logout</button>
+    <button @click="logoutUser()">Logout</button>
   </div>
 </template>
 <style scoped lang="scss">

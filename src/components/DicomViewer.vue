@@ -14,11 +14,9 @@ const props = defineProps<{
 const renderingEngineId = import.meta.env.VITE_CORNERSTONE_RENDERINGENGINE
 const viewportId = import.meta.env.VITE_CORNERSTONE_AXIAL_VIEWPORT
 const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
-
 const el = ref()
 const slice = ref(0)
 const viewport = ref<Types.IStackViewport>()
-
 const { Enums } = cornerstone
 const { ViewportType } = Enums
 const { addViewport } = useToolGroup()

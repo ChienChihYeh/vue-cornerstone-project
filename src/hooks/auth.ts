@@ -1,6 +1,5 @@
 import { useRouter } from 'vue-router'
 import { useTokenStore } from '@/stores/token'
-import cornerstoneDICOMImageLoader from '@cornerstonejs/dicom-image-loader'
 import axios from 'axios'
 
 export function useAuth() {

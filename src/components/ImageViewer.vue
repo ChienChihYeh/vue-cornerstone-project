@@ -15,11 +15,9 @@ const props = defineProps<{
 const renderingEngineId = import.meta.env.VITE_CORNERSTONE_RENDERINGENGINE
 const viewportId = import.meta.env.VITE_CORNERSTONE_CORONAL_VIEWPORT
 const toolGroupId = import.meta.env.VITE_CORNERSTONE_TOOLGROUP
-
 const el = ref()
 const slice = ref(0)
 const viewport = ref<Types.IStackViewport>()
-
 const { Enums, imageLoader, metaData } = cornerstone
 const { ViewportType } = Enums
 const { addViewport } = useToolGroup()
@@ -41,7 +39,7 @@ async function enableViewer() {
   viewport.value = renderingEngine?.getViewport(viewportId) as Types.IStackViewport
   const imageIds = props.imageIds
   metaData.addProvider((type, imageId) => {
-    // this metadata provider is just a demo, replace with your own
+    // This hardcoded metadata provider, required for web image loader, is just a demo. Replace it with your own.
     const result = hardcodedMetaDataProvider(type, imageId, imageIds)
     return result
   }, 1000)
