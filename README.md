@@ -7,6 +7,7 @@ This repository contains a working project that provides a basic code demo showc
 - Customizing hook-based web image loader, referencing the Cornerstone3D repository's source code, for token-based authentication
 - Registering image loaders to Cornerstone3D
 - Displaying stack images with Cornerstone3D
+- Parsing metadata from DICOM image
 - Basic initialization and usage of Cornerstone3D tools
 - Abstraction of tools, event handlers, and configuration to hooks
 - Using Cornerstone3D with Typescript and providing necessary type declarations
