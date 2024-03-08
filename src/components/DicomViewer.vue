@@ -6,6 +6,7 @@ import type { IStackViewport } from '@cornerstonejs/core/dist/types/types'
 import { useToolGroup } from '@/hooks/toolGroup'
 import { useEventListener } from '@/hooks/event'
 import { resetCamera, checkZoom, handleViewerWheel } from '@/utils/viewerHelpers'
+import { initViewportRender, getImageData } from '@/utils/initViewportRender'
 
 const props = defineProps<{
   imageIds: string[]
@@ -23,8 +24,10 @@ const { addViewport } = useToolGroup()
 
 watchEffect(() => {
   if (props.imageIds.length > 0 && viewport.value) {
-    viewport.value.setStack(props.imageIds, 0)
-    viewport.value.render()
+    initViewportRender(props.imageIds, viewport.value).then(() => {
+      if (viewport.value) console.log(getImageData(viewport.value))
+      // you can provide web image loader with this metadata if that's the case
+    })
   }
 })
 
