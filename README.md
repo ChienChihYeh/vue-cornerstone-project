@@ -16,3 +16,4 @@ This repository contains a working project that provides a basic code demo showc
 
 - [Cornerstone3D Repository](https://github.com/cornerstonejs/cornerstone3D)
 - [Cornerstone3D Documentation](https://www.cornerstonejs.org/)
+- [vue-cornerstone-demo](https://github.com/ChienChihYeh/vue-cornerstone-demo) - public live demo
